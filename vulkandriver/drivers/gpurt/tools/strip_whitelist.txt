@@ -1,0 +1,28 @@
+// NOTE: spirv-remap uses substring comparison for whitelist name matching, so we only need to specify `AmdExt` here for
+// example to white-list all `AmdExt*` functions.
+AmdExt
+AmdTraceRay
+#if GPURT_BUILD_CONTINUATION
+_Amd
+_cont_
+#endif
+main
+TraceRayInline1_1
+RayQueryProceed1_1
+TraceRay1_1
+TraceRayUsingRayQuery1_1
+TraceRayUsingHitToken1_1
+GetInstanceID
+GetInstanceIndex
+GetObjectToWorldTransform
+GetWorldToObjectTransform
+TraceRayInline2_0
+RayQueryProceed2_0
+TraceRay2_0
+TraceRayUsingRayQuery2_0
+TraceRayUsingHitToken2_0
+GetRayQuery64BitInstanceNodePtr
+RayQueryInternal
+FetchTrianglePositionFromNodePointer
+FetchTrianglePositionFromRayQuery
+_RayQuery_

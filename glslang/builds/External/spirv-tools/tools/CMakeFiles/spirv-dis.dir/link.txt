@@ -1,0 +1,1 @@
+/usr/bin/c++ -O3 -DNDEBUG -Wl,--no-undefined CMakeFiles/spirv-dis.dir/util/flags.cpp.o CMakeFiles/spirv-dis.dir/dis/dis.cpp.o -o spirv-dis  ../source/libSPIRV-Tools.a -lrt 

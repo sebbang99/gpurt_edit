@@ -1,0 +1,27 @@
+{
+  "Version": 1,
+  "ComponentName": "PalExperiments",
+  "Settings": [
+    {
+      "Description": "Disable depth-stencil texture compression in the driver.",
+      "Tags": [
+        "Safety"
+      ],
+      "Type": "bool",
+      "Name": "ExpDepthStencilTextureCompression",
+      "ExperimentName": "Disable depth-stencil texture compression"
+    },
+    {
+      "Description": "Synchronization/barrier optimizations.",
+      "Tags": [
+        "Safety"
+      ],
+      "Type": "bool",
+      "Name": "ExpSynchronizationOptimizationOreoModeControl",
+      "ExperimentName": "Synchronization/barrier optimizations"
+    }
+  ],
+  "Tags": [
+    "Safety"
+  ]
+}

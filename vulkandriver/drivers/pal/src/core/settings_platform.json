@@ -1,0 +1,2343 @@
+{
+  "ComponentName": "PalPlatform",
+  "Enums": [
+    {
+      "Name": "TimeGraphColor",
+      "Values": [
+        {
+          "Description": "Black",
+          "Value": 0,
+          "Name": "BlackColor"
+        },
+        {
+          "Description": "Red",
+          "Value": 1,
+          "Name": "RedColor"
+        },
+        {
+          "Description": "Green",
+          "Value": 2,
+          "Name": "GreenColor"
+        },
+        {
+          "Description": "Blue",
+          "Value": 3,
+          "Name": "BlueColor"
+        },
+        {
+          "Description": "Yellow",
+          "Value": 4,
+          "Name": "YellowColor"
+        },
+        {
+          "Description": "Cyan",
+          "Value": 5,
+          "Name": "CyanColor"
+        },
+        {
+          "Description": "Magenta",
+          "Value": 6,
+          "Name": "MagentaColor"
+        },
+        {
+          "Description": "White",
+          "Value": 7,
+          "Name": "WhiteColor"
+        }
+      ]
+    },
+    {
+      "Name": "Util::DbgPrintMode",
+      "SkipGen": true,
+      "Values": [
+        {
+          "Name": "Disable",
+          "Value": 0,
+          "Description": "Debug print is ignored."
+        },
+        {
+          "Name": "Print",
+          "Value": 1,
+          "Description": "Debug print is routed to the debug window or stdout."
+        },
+        {
+          "Name": "File",
+          "Value": 2,
+          "Description": "Debug print is routed to a file."
+        },
+        {
+          "Name": "PrintCallback",
+          "Value": 3,
+          "Description": "Debug print is routed to the print callback only."
+        }
+      ]
+    }
+  ],
+  "Settings": [
+    {
+      "Name": "DbgPrintInfoMode",
+      "Tags": [
+        "Debug Print"
+      ],
+      "Defaults": {
+        "Default": "Disable"
+      },
+      "Type": "enum",
+      "ValidValues": {
+        "Name": "Util::DbgPrintMode"
+      },
+      "Description": "How to print log messages under category 'DbgPrintCatInfoMsg'.",
+      "BuildTypes": [
+        "PAL_ENABLE_PRINTS_ASSERTS"
+      ]
+    },
+    {
+      "Name": "DbgPrintWarnMode",
+      "Tags": [
+        "Debug Print"
+      ],
+      "Defaults": {
+        "Default": "Disable"
+      },
+      "Type": "enum",
+      "ValidValues": {
+        "Name": "Util::DbgPrintMode"
+      },
+      "Description": "How to print log messages under category 'DbgPrintCatWarnMsg'.",
+      "BuildTypes": [
+        "PAL_ENABLE_PRINTS_ASSERTS"
+      ]
+    },
+    {
+      "Name": "DbgPrintErrorMode",
+      "Tags": [
+        "Debug Print"
+      ],
+      "Defaults": {
+        "Default": "Disable"
+      },
+      "Type": "enum",
+      "ValidValues": {
+        "Name": "Util::DbgPrintMode"
+      },
+      "Description": "How to print log messages under category 'DbgPrintCatErrorMsg'.",
+      "BuildTypes": [
+        "PAL_ENABLE_PRINTS_ASSERTS"
+      ]
+    },
+    {
+      "Name": "DbgPrintScMsgMode",
+      "Tags": [
+        "Debug Print"
+      ],
+      "Defaults": {
+        "Default": "Disable"
+      },
+      "Type": "enum",
+      "ValidValues": {
+        "Name": "Util::DbgPrintMode"
+      },
+      "Description": "How to print log messages under category 'DbgPrintCatScMsg'.",
+      "BuildTypes": [
+        "PAL_ENABLE_PRINTS_ASSERTS"
+      ]
+    },
+    {
+      "Name": "DbgPrintEventMode",
+      "Tags": [
+        "Debug Print"
+      ],
+      "Defaults": {
+        "Default": "Disable"
+      },
+      "Type": "enum",
+      "ValidValues": {
+        "Name": "Util::DbgPrintMode"
+      },
+      "Description": "How to print log messages under category 'DbgPrintCatEventPrintMsg'.",
+      "BuildTypes": [
+        "PAL_ENABLE_PRINTS_ASSERTS"
+      ]
+    },
+    {
+      "Name": "DbgPrintEventCallbackMode",
+      "Tags": [
+        "Debug Print"
+      ],
+      "Defaults": {
+        "Default": "Disable"
+      },
+      "Type": "enum",
+      "ValidValues": {
+        "Name": "Util::DbgPrintMode"
+      },
+      "Description": "How to print log messages under category 'DbgPrintCatEventPrintCallbackMsg'.",
+      "BuildTypes": [
+        "PAL_ENABLE_PRINTS_ASSERTS"
+      ]
+    },
+    {
+      "Name": "EnableSoftAssert",
+      "Tags": [
+        "Debug Print"
+      ],
+      "Defaults": {
+        "Default": false
+      },
+      "Type": "bool",
+      "Description": "Whether to enable soft assert (AKA. alerts). Alerts are used to notify developers of possible but unexpected conditions.",
+      "BuildTypes": [
+        "PAL_ENABLE_PRINTS_ASSERTS"
+      ]
+    },
+    {
+      "Name": "EnableHardAssert",
+      "Tags": [
+        "Debug Print"
+      ],
+      "Defaults": {
+        "Default": false
+      },
+      "Type": "bool",
+      "Description": "Whether to enable hard assert. Hard asserts are used to verify known, assumed state of the program at any time.",
+      "BuildTypes": [
+        "PAL_ENABLE_PRINTS_ASSERTS"
+      ]
+    },
+    {
+      "Name": "DbgLogEnabled",
+      "Tags": [
+        "Debug Log"
+      ],
+      "Defaults": {
+        "Default": false
+      },
+      "Scope": "PrivatePalKey",
+      "Type": "bool",
+      "Description": "Flag to turn debug message logging on/off globally.",
+      "BuildTypes": [
+        "PAL_ENABLE_LOGGING"
+      ]
+    },
+    {
+      "Name": "DbgLoggerFileConfig",
+      "Tags": [
+        "Debug Log"
+      ],
+      "Scope": "PrivatePalKey",
+      "Structure": [
+        {
+          "Description": "Relative directory where debug log file will be placed. Relative to the path in the AMD_DEBUG_DIR environment variable. If that env var isn't set, the location is platform dependent.",
+          "Flags": {
+            "IsDir": true
+          },
+          "Tags": [
+            "Debug Log"
+          ],
+          "Defaults": {
+            "Default": "amdpal/",
+            "Windows": "PalLog\\",
+            "Linux": "amdpal/"
+          },
+          "Type": "string",
+          "Name": "LogDirectory"
+        },
+        {
+          "ValidValues": {
+            "Values": [
+              {
+                "Name": "LogToDisk",
+                "Value": 1,
+                "Description": "Log debug messages to disk."
+              },
+              {
+                "Name": "LogToTerminal",
+                "Value": 2,
+                "Description": "Log debug messages to terminal."
+              },
+              {
+                "Name": "AddPid",
+                "Value": 4,
+                "Description": "Add PID to debug log file name."
+              },
+              {
+                "Name": "AddPname",
+                "Value": 8,
+                "Description": "Add process name to debug log file name"
+              },
+              {
+                "Name": "AddLibName",
+                "Value": 16,
+                "Description": "Add Library name to debug log file name."
+              },
+              {
+                "Name": "ForceFlush",
+                "Value": 32,
+                "Description": "Force a flush after every write to file."
+              }
+            ],
+            "SkipGen": true,
+            "IsEnum": true,
+            "Name": "FileSettingsFlags"
+          },
+          "Name": "FileSettingsFlags",
+          "Defaults": {
+            "Default": 32
+          },
+          "Flags": {
+            "IsBitmask": true,
+            "IsHex": true
+          },
+          "Type": "uint32",
+          "Description": "Mask indicating various file settings as defined in Util::FileSettings."
+        },
+        {
+          "ValidValues": {
+            "Values": [
+              {
+                "Name": "FileAccessWrite",
+                "Value": 2,
+                "Description": "File Access Write."
+              },
+              {
+                "Name": "FileAccessAppend",
+                "Value": 4,
+                "Description": "File Access Append"
+              },
+              {
+                "Name": "FileAccessBinary",
+                "Value": 8,
+                "Description": "File Access Binary"
+              },
+              {
+                "Name": "FileAccessNoDiscard",
+                "Value": 16,
+                "Description": "Don't discard existing file"
+              }
+            ],
+            "SkipGen": true,
+            "IsEnum": true,
+            "Name": "FileAccessFlags"
+          },
+          "Name": "FileAccessFlags",
+          "Defaults": {
+            "Default": 2
+          },
+          "Flags": {
+            "IsBitmask": true,
+            "IsHex": true
+          },
+          "Type": "uint32",
+          "Description": "Mask indicating various file access modes as defined in Util::FileAccessMode."
+        },
+        {
+          "ValidValues": {
+            "Values": [
+              {
+                "Name": "Debug",
+                "Value": 0
+              },
+              {
+                "Name": "Info",
+                "Value": 1
+              },
+              {
+                "Name": "Warning",
+                "Value": 2
+              },
+              {
+                "Name": "Error",
+                "Value": 3
+              },
+              {
+                "Name": "Critical",
+                "Value": 4
+              }
+            ]
+          },
+          "Name": "SeverityLevel",
+          "Defaults": {
+            "Default": 4
+          },
+          "Type": "uint32",
+          "Description": "Specifies the severity level for each log message as defined in Util::SeverityLevel."
+        },
+        {
+          "ValidValues": {
+            "Values": [
+              {
+                "Name": "OriginationTypeFlagUnknown",
+                "Value": 1,
+                "Description": "Originating from an unknown source"
+              },
+              {
+                "Name": "OriginationTypeFlagDebugPrint",
+                "Value": 2,
+                "Description": "Originating from PAL_DPINFO, PAL_DPERROR, etc. ."
+              },
+              {
+                "Name": "OriginationTypeFlagAlert",
+                "Value": 4,
+                "Description": "Originating from PAL_ALERT* macros"
+              },
+              {
+                "Name": "OriginationTypeFlagAssert",
+                "Value": 8,
+                "Description": "Originating from PAL_ASSERT* macros"
+              },
+              {
+                "Name": "OriginationTypeFlagTelemetry",
+                "Value": 16,
+                "Description": "Used for msgs regarding crash dump and offline analysis"
+              },
+              {
+                "Name": "OriginationTypeFlagPipelineCompiler",
+                "Value": 32,
+                "Description": "Originating from pipeline compiler"
+              },
+              {
+                "Name": "OriginationTypeFlagGpuProfiler",
+                "Value": 64,
+                "Description": "Originating from the GpuProfiler PAL layer"
+              }
+            ],
+            "SkipGen": true,
+            "IsEnum": true,
+            "Name": "OrigTypeMask"
+          },
+          "Name": "OrigTypeMask",
+          "Defaults": {
+            "Default": 0
+          },
+          "Flags": {
+            "IsBitmask": true,
+            "IsHex": true
+          },
+          "Type": "uint32",
+          "Description": "Mask indicating the sources for each log message as defined in Util::OriginationTypeFlags."
+        }
+      ],
+      "Description": "Controls debug message logging options.",
+      "BuildTypes": [
+        "PAL_ENABLE_LOGGING"
+      ]
+    },
+    {
+      "Tags": [
+        "GPU ID Masquerade"
+      ],
+      "Scope": "PrivatePalKey",
+      "Type": "string",
+      "Description": "Spoofs the current GPU into the given model and enables IFH. See GpuInfoLookupTable in libInit.cpp for options (eg 'RAVEN' from 'RAVEN:gfx902').",
+      "Defaults": {
+        "Default": ""
+      },
+      "Name": "SpoofNullGpuIfh"
+    },
+    {
+      "Tags": [
+        "GPU ID Masquerade"
+      ],
+      "Scope": "PrivatePalKey",
+      "Type": "uint64",
+      "Description": "To override non-local heap size for private debug usage. Value=0 means not override the non-local heap size. NOTE: This key is only for linux usage.",
+      "Defaults": {
+        "Default": 0
+      },
+      "Name": "OverrideNonLocalHeapSize"
+    },
+    {
+      "Name": "DebugOverlayEnabled",
+      "Tags": [
+        "Debug Overlay"
+      ],
+      "Defaults": {
+        "Default": false
+      },
+      "Scope": "PrivatePalKey",
+      "Type": "bool",
+      "Description": "Enables the debug overlay."
+    },
+    {
+      "Name": "DebugOverlayConfig",
+      "Tags": [
+        "Debug Overlay"
+      ],
+      "Scope": "PrivatePalKey",
+      "Structure": [
+        {
+          "Description": "Writes debug overlay information to the screen.",
+          "Defaults": {
+            "Default": true
+          },
+          "Type": "bool",
+          "Name": "VisualConfirmEnabled"
+        },
+        {
+          "Description": "Draws the timegraph to the screen.",
+          "Defaults": {
+            "Default": false
+          },
+          "Type": "bool",
+          "Name": "TimeGraphEnabled"
+        },
+        {
+          "Description": "Include important command processor versions.",
+          "Defaults": {
+            "Default": false
+          },
+          "Type": "bool",
+          "Name": "CpVersionEnabled"
+        },
+        {
+          "ValidValues": {
+            "IsEnum": true,
+            "Values": [
+              {
+                "Name": "DebugOverlayUpperLeft",
+                "Value": 0
+              },
+              {
+                "Name": "DebugOverlayUpperRight",
+                "Value": 1
+              },
+              {
+                "Name": "DebugOverlayLowerRight",
+                "Value": 2
+              },
+              {
+                "Name": "DebugOverlayLowerLeft",
+                "Value": 3
+              },
+              {
+                "Name": "DebugOverlayCount",
+                "Value": 4
+              }
+            ],
+            "Name": "DebugOverlayLocation"
+          },
+          "Name": "DebugOverlayLocation",
+          "Defaults": {
+            "Default": "DebugOverlayLowerLeft"
+          },
+          "Type": "enum",
+          "Description": "Location to display debug text."
+        },
+        {
+          "Description": "Output time and date in the debug overlay.",
+          "Defaults": {
+            "Default": false
+          },
+          "Type": "bool",
+          "Name": "DateTimeEnabled"
+        },
+        {
+          "Description": "How big to scale each pixel of the debug overlay. Minimum is 1 and maximum is 4.",
+          "Defaults": {
+            "Default": 1
+          },
+          "Type": "uint32",
+          "Name": "PixelScale"
+        },
+        {
+          "Description": "Output current frame number in the debug overlay.",
+          "Defaults": {
+            "Default": false
+          },
+          "Type": "bool",
+          "Name": "PrintFrameNumber"
+        },
+        {
+          "Description": "Use DebugOverlay on CmdColorSpaceConversionCopy.",
+          "Defaults": {
+            "Default": false
+          },
+          "Type": "bool",
+          "Name": "UseDebugOverlayOnColorSpaceConversionCopy"
+        }
+      ],
+      "Description": "Controls what information is displayed on the Debug Overlay."
+    },
+    {
+      "Name": "TimeGraphConfig",
+      "Tags": [
+        "Debug Overlay"
+      ],
+      "Scope": "PrivatePalKey",
+      "Structure": [
+        {
+          "ValidValues": {
+            "Name": "TimeGraphColor"
+          },
+          "Name": "GridLineColor",
+          "Defaults": {
+            "Default": "RedColor"
+          },
+          "Type": "enum",
+          "Description": "Color of the grid line in the time graph."
+        },
+        {
+          "ValidValues": {
+            "Name": "TimeGraphColor"
+          },
+          "Name": "CpuLineColor",
+          "Defaults": {
+            "Default": "YellowColor"
+          },
+          "Type": "enum",
+          "Description": "Color of the CPU line in the time graph."
+        },
+        {
+          "ValidValues": {
+            "Name": "TimeGraphColor"
+          },
+          "Name": "GpuLineColor",
+          "Defaults": {
+            "Default": "GreenColor"
+          },
+          "Type": "enum",
+          "Description": "Color of the GPU line in the time graph."
+        }
+      ],
+      "Description": "Time Graph display configuration"
+    },
+    {
+      "Name": "OverlayBenchmarkConfig",
+      "Tags": [
+        "Debug Overlay"
+      ],
+      "Scope": "PrivatePalKey",
+      "Structure": [
+        {
+          "Description": "End benchmark after specified number of seconds.  The benchmark can still be ended early by hitting F11.  A value of 0 will allow the benchmark to run forever.",
+          "Defaults": {
+            "Default": 0
+          },
+          "Type": "uint32",
+          "Name": "MaxBenchmarkTime"
+        },
+        {
+          "Description": "Whether or not a log entry of PAL usage will be generated to disk.",
+          "Defaults": {
+            "Default": false
+          },
+          "Type": "bool",
+          "Name": "UsageLogEnable"
+        },
+        {
+          "Description": "Relative directory where usage logs are placed. Relative to the path in the AMD_DEBUG_DIR environment variable. If that env var isn't set, the location is platform dependent.",
+          "Flags": {
+            "IsDir": true
+          },
+          "Defaults": {
+            "Default": "amdpal/",
+            "Windows": "PalLog\\",
+            "Linux": "amdpal/"
+          },
+          "Type": "string",
+          "Name": "UsageLogDirectory"
+        },
+        {
+          "Description": "Filename and extension of the usage log.",
+          "Defaults": {
+            "Default": "PalUsageLog.txt"
+          },
+          "Type": "string",
+          "Name": "UsageLogFilename"
+        },
+        {
+          "Description": "Log frame time and average FPS during benchmark session to files. Only enabled when DebugVisualDisplay is enabled.",
+          "Defaults": {
+            "Default": false
+          },
+          "Type": "bool",
+          "Name": "LogFrameStats"
+        },
+        {
+          "Description": "Relative directory where frame statistic logs are placed. Relative to the path in the AMD_DEBUG_DIR environment variable. If that env var isn't set, the location is platform dependent.",
+          "Flags": {
+            "IsDir": true
+          },
+          "Defaults": {
+            "Default": "amdpal/",
+            "Windows": "PalLog\\",
+            "Linux": "amdpal/"
+          },
+          "Type": "string",
+          "Name": "FrameStatsLogDirectory"
+        },
+        {
+          "Description": "Max mumber of frame time samples that can be logged in a benchmark session.",
+          "Defaults": {
+            "Default": 65536
+          },
+          "Type": "uint32",
+          "Name": "MaxLoggedFrames"
+        }
+      ],
+      "Description": "Debug Overlay Benchmark configuration."
+    },
+    {
+      "Name": "OverlayMemoryInfoConfig",
+      "Tags": [
+        "Debug Overlay"
+      ],
+      "Scope": "PrivatePalKey",
+      "Structure": [
+        {
+          "Description": "If the total memory allocated from the two non-local heaps should be shown in a single line.",
+          "Defaults": {
+            "Default": true
+          },
+          "Type": "bool",
+          "Name": "CombineNonLocal"
+        },
+        {
+          "Description": "Determines if the overlay will report information about CmdAllocator allocations.",
+          "Defaults": {
+            "Default": true
+          },
+          "Type": "bool",
+          "Name": "ReportCmdAllocator"
+        },
+        {
+          "Description": "Determines if the overlay will report information about external allocations.",
+          "Defaults": {
+            "Default": true
+          },
+          "Type": "bool",
+          "Name": "ReportExternal"
+        },
+        {
+          "Description": "Determines if the overlay will report information about internal allocations.",
+          "Defaults": {
+            "Default": true
+          },
+          "Type": "bool",
+          "Name": "ReportInternal"
+        },
+        {
+          "Description": "Determines if the overlay will display peak memory usage.",
+          "Defaults": {
+            "Default": false
+          },
+          "Type": "bool",
+          "Name": "DisplayPeakMemUsage"
+        }
+      ],
+      "Description": "Configures the memory usage display on the Debug Overlay."
+    },
+    {
+      "ValidValues": {
+        "Values": [
+          {
+            "Name": "Shift_F11",
+            "Value": 107,
+            "Description": "Default GPU profiler capture trigger key"
+          },
+          {
+            "Name": "F1",
+            "Value": 1,
+            "Description": "Forced GPU profiler capture trigger key."
+          },
+          {
+            "Name": "F2",
+            "Value": 2,
+            "Description": "Forced GPU profiler capture trigger key."
+          },
+          {
+            "Name": "F13",
+            "Value": 13,
+            "Description": "Forced GPU profiler capture trigger key."
+          },
+          {
+            "Name": "F16",
+            "Value": 16,
+            "Description": "Forced GPU profiler capture trigger key."
+          }
+        ],
+        "Name": "GpuProfilerCaptureTriggerKey",
+        "SkipGen": true,
+        "IsEnum": true
+      },
+      "Name": "GpuProfilerCaptureTriggerKey",
+      "Tags": [
+        "GPU Profiler"
+      ],
+      "Defaults": {
+        "Default": "Shift_F11"
+      },
+      "Scope": "PrivatePalKey",
+      "Type": "enum",
+      "Description": "Default trigger key is Shift_F11 and forced trigger keys are F1, F2, F13, and F16 for capturing GPU profiler."
+    },
+    {
+      "ValidValues": {
+        "Values": [
+          {
+            "Name": "GpuProfilerDisabled",
+            "Value": 0,
+            "Description": "GPU Profiler Disabled"
+          },
+          {
+            "Name": "GpuProfilerCounterAndTimingOnly",
+            "Value": 1,
+            "Description": "Traces are disabled but perf counter and timing operations are enabled."
+          },
+          {
+            "Name": "GpuProfilerTraceEnabledTtv",
+            "Value": 2,
+            "Description": "Traces (Spm and/or Sqtt) are output in format (.csv, .out) for Thread trace viewer."
+          },
+          {
+            "Name": "GpuProfilerTraceEnabledRgp",
+            "Value": 3,
+            "Description": "Trace data (Spm and/or Sqtt) is output as .rgp file for Radeon Gpu Profiler."
+          }
+        ],
+        "Name": "GpuProfilerMode",
+        "SkipGen": true,
+        "IsEnum": true
+      },
+      "Name": "GpuProfilerMode",
+      "Tags": [
+        "GPU Profiler"
+      ],
+      "Defaults": {
+        "Default": "GpuProfilerDisabled"
+      },
+      "Scope": "PrivatePalKey",
+      "Type": "enum",
+      "Description": "Enables and sets the SQTT mode for the GPU performance profiler layer.  Actual capture of performance data must be specified via frame number with GpuProfilerConfig.StartFrame or by holding shift-F11."
+    },
+    {
+      "Name": "GpuProfilerTokenAllocatorSize",
+      "Tags": [
+        "GPU Profiler"
+      ],
+      "Defaults": {
+        "Default": 65536
+      },
+      "Scope": "PrivatePalKey",
+      "Type": "uint64",
+      "Description": "Initial batched cmd buffer token stream size. Reduce this to avoid running out of memory or increase it to avoid reallocations and memcpys."
+    },
+    {
+      "Name": "GpuProfilerConfig",
+      "Tags": [
+        "GPU Profiler"
+      ],
+      "Scope": "PrivatePalKey",
+      "Structure": [
+        {
+          "Description": "Relative directory where GPU profiler logs are written. Relative to the path in the AMD_DEBUG_DIR environment variable. If that env var isn't set, the location is platform dependent.",
+          "Flags": {
+            "IsDir": true
+          },
+          "Defaults": {
+            "Default": "amdpal/",
+            "Windows": "PalLog\\",
+            "Linux": "amdpal/"
+          },
+          "Type": "string",
+          "Name": "LogDirectory"
+        },
+        {
+          "Description": "Application name for which the GpuProfiler layer will be enabled. Leaving this value empty will enable the GpuProfiler for any application.",
+          "Defaults": {
+            "Default": ""
+          },
+          "Type": "string",
+          "Name": "TargetApplication"
+        },
+        {
+          "Description": "Frame number to begin performance data collection. Currently Gpu Profiler doesn't support profiling frame 0",
+          "Defaults": {
+            "Default": 0
+          },
+          "Type": "uint32",
+          "Name": "StartFrame"
+        },
+        {
+          "Description": "Number of frames to enable performance data collection.",
+          "Defaults": {
+            "Default": 0
+          },
+          "Type": "uint32",
+          "Name": "FrameCount"
+        },
+        {
+          "Description": "Command buffer number to begin performance data collection. Command buffers are numbered globally at the device level, the order of which is non-deterministic for submissions to multiple queues. GpuProfiler records command buffers at submission time, so command buffer numbering reflects the order of submission, not cmdbuffer API calls.",
+          "Defaults": {
+            "Default": 0
+          },
+          "Type": "uint32",
+          "Name": "StartCommandBuffer"
+        },
+        {
+          "Description": "Number of command buffers to enable performance data collection.",
+          "Defaults": {
+            "Default": 0
+          },
+          "Type": "uint32",
+          "Name": "CommandBufferCount"
+        },
+        {
+          "Description": "Enable recording of pipeline stats for each operation on the compute or universal queue. Enabling this may adversely affect quality of the GPU timing data.  Not supported for frame-granularity captures.",
+          "Defaults": {
+            "Default": false
+          },
+          "Type": "bool",
+          "Name": "RecordPipelineStats"
+        },
+        {
+          "Description": "Split up IQueue::Submit() calls so that the PAL core is called once per command buffer in the batch.  This can significantly reduce the GPU memory overhead of the profiler, but may have a slight impact on results.",
+          "Defaults": {
+            "Default": false
+          },
+          "Type": "bool",
+          "Name": "BreakSubmitBatches"
+        },
+        {
+          "Description": "Do not write cmd-buf timing data for cmd-bufs not containing draws/dispatches",
+          "Defaults": {
+            "Default": false
+          },
+          "Type": "bool",
+          "Name": "IgnoreNonDrawDispatchCmdBufs"
+        },
+        {
+          "Description": "Controls whether file names and text logs will contain full pipeline hashes or just the stable hash.",
+          "Defaults": {
+            "Default": false
+          },
+          "Type": "bool",
+          "Name": "UseFullPipelineHash"
+        },
+        {
+          "Description": "Disables GPA session re-use.",
+          "Defaults": {
+            "Default": false
+          },
+          "Type": "bool",
+          "Name": "DisableGpaSessionReuse"
+        },
+        {
+          "ValidValues": {
+            "IsEnum": true,
+            "Values": [
+              {
+                "Description": "Trace Disabled",
+                "Value": 0,
+                "Name": "GpuProfilerTraceDisabled"
+              },
+              {
+                "Description": "Enable SPM",
+                "Value": 1,
+                "Name": "GpuProfilerTraceSpm"
+              },
+              {
+                "Description": "Enable SQTT",
+                "Value": 2,
+                "Name": "GpuProfilerTraceSqtt"
+              }
+            ],
+            "Name": "GpuProfilerTraceModeFlags"
+          },
+          "Name": "TraceModeMask",
+          "Defaults": {
+            "Default": 0
+          },
+          "Flags": {
+            "IsBitmask": true,
+            "IsHex": true
+          },
+          "Type": "uint32",
+          "Description": "Mask indicating which traces are enabled. Both spm trace and Sqtt trace are disabled (0x0)   Spm trace is enabled (0x1). Sqtt trace is enabled (0x2)."
+        },
+        {
+          "ValidValues": {
+            "IsEnum": true,
+            "Values": [
+              {
+                "Name": "GpuProfilerGranularityDraw",
+                "Value": 0,
+                "Description": "Per draw.  Each separate draw will be measured."
+              },
+              {
+                "Name": "GpuProfilerGranularityCmdBuf",
+                "Value": 1,
+                "Description": "Per command buffer.  Whole command buffers will be grouped."
+              },
+              {
+                "Name": "GpuProfilerGranularityFrame",
+                "Value": 2,
+                "Description": "Per frame, the whole frame will be grouped.  Useful to get a thread trace covering all command buffers across the universal and compute queues.  Pipeline stats will not be gathered in this mode.  NOTE: Since SQTT will be filtered by VMID if you wish to gather a thread trace across multiple queues (i.e., including async compute work), a Debug VMID should also be requested to ensure work in all queues share the same VMID."
+              }
+            ],
+            "Name": "GpuProfilerGranularity"
+          },
+          "Name": "Granularity",
+          "Defaults": {
+            "Default": "GpuProfilerGranularityDraw"
+          },
+          "Type": "enum",
+          "Description": "Determines what granularity should be used for gathering performance data:  0: Per draw.  Each separate draw will be measured. 1: Per command buffer.  Whole command buffers will be grouped. 2: Per frame.  Whole frame will be grouped.  Useful to get a thread trace covering all command buffers across the universal and compute queues.  Pipeline stats cannot be gathered in this mode.  If you wish to gather a thread trace across multiple queues (i.e., including async compute work), you should also set requestDebugVmid."
+        },
+        {
+          "ValidValues": {
+            "IsEnum": true,
+            "Values": [
+              {
+                "Name": "GpuProfilerClockModeDefault",
+                "Value": 0,
+                "Description": "Do not change the clocks. This may break performance counters unless some power settings are disabled."
+              },
+              {
+                "Name": "GpuProfilerClockModeStable",
+                "Value": 1,
+                "Description": "Clocks are set to a constant amount which is known to be power and thermal sustainable. Can be much, much lower than peak clocks."
+              },
+              {
+                "Name": "GpuProfilerClockModePeak",
+                "Value": 2,
+                "Description": "Clocks set to maximum when possible. Downclocking may occur if the profiled workload is long."
+              },
+              {
+                "Name": "GpuProfilerClockModeMinMemory",
+                "Value": 3,
+                "Description": "Memory clock is set to the lowest available level. Other clocks are set to a stable level."
+              },
+              {
+                "Name": "GpuProfilerClockModeMinEngine",
+                "Value": 4,
+                "Description": "Engine clock is set to the lowest available level. Other clocks are set to a stable level."
+              }
+            ],
+            "Name": "GpuProfilerClockMode"
+          },
+          "Name": "ClockMode",
+          "Defaults": {
+            "Default": "GpuProfilerClockModePeak"
+          },
+          "Type": "enum",
+          "Description": "What clock mode PAL should enable when profiling."
+        },
+        {
+          "Name": "EngineTypeMask",
+          "Flags": {
+            "IsBitmask": true,
+            "IsHex": true
+          },
+          "Defaults": {
+            "Default": "0xFFFFFFFF"
+          },
+          "Type": "uint32",
+          "Description": "Mask indicating which engines are enabled for profiling. 0 - Universal, 1 - ACE, 2 - DMA. Universal should always be enabled for frame granularity (2)."
+        },
+        {
+          "Name": "EngineIdMask",
+          "Flags": {
+            "IsBitmask": true,
+            "IsHex": true
+          },
+          "Defaults": {
+            "Default": "0xFFFFFFFF"
+          },
+          "Type": "uint32",
+          "Description": "Mask indicating which engine instances are enabled for profiling where multiple are available (compute and dma). Applies to all enabled types for now."
+        },
+        {
+          "Name": "QueueIdMask",
+          "Flags": {
+            "IsBitmask": true,
+            "IsHex": true
+          },
+          "Defaults": {
+            "Default": "0xFFFFFFFF"
+          },
+          "Type": "uint32",
+          "Description": "Mask indicating which queue ids are requested to profile. 0xFFFFFFFF means to profile all queue ids. This must be set as 0xFFFFFFFF for per-frame granularity."
+        }
+      ],
+      "Description": "Configuration options for the PAL GPU Profiler layer."
+    },
+    {
+      "Name": "GpuProfilerPerfCounterConfig",
+      "Tags": [
+        "GPU Profiler"
+      ],
+      "Scope": "PrivatePalKey",
+      "Structure": [
+        {
+          "Description": "File path specifying where the global performance counter config file can be found.  This file should have one line per counter to capture in the form \"Block ID Instance Name\". Block can be one of the following: CB, CPC, CPF, CPG, DB, DMA, GDS, GRBM, GRBM_SE, IA, MC, PA, RLC, SC, SPI, SQ, SRBM, SX, TA, TCA, TCC, TCP, TCS, TD, VGT, WD. ID should correspond to the specific counter of interest for the specified Block, these can be selected by reading the performance counter select register for that block. Instance can be the block instance ordinal of interest. It can also be the enum EACH which means every instance of the block is of interest. Also It can be ALL, which has the same meaning as EACH, but the results of every instance will be accumlated. Name will be the header of the column in the .csv file (limited to 127 characters).  A \"#\" can be inserted as the first character in a line to force that line to be ignored.  Gathering performance counters has a huge performance impact; consider disabling TDRs on Windows.",
+          "Flags": {
+            "IsFile": true
+          },
+          "Defaults": {
+            "Default": ""
+          },
+          "Type": "string",
+          "Name": "GlobalPerfCounterConfigFile"
+        },
+        {
+          "Description": "Insert cache flush and invalidate events before and after every range of commands where performance counters are collected.",
+          "Defaults": {
+            "Default": false
+          },
+          "Type": "bool",
+          "Name": "CacheFlushOnCounterCollection"
+        },
+        {
+          "Description": "Use 32bit counters for all SPM blocks instead of the default 16bit",
+          "Defaults": {
+            "Default": false
+          },
+          "Type": "bool",
+          "Name": "Use32BitSpmCounters"
+        }
+      ],
+      "Description": "Configuration options for performance counter collection through the PAL GPU Profiler Layer."
+    },
+    {
+      "Name": "GpuProfilerSqttConfig",
+      "Tags": [
+        "GPU Profiler"
+      ],
+      "Scope": "PrivatePalKey",
+      "Structure": [
+        {
+          "Name": "ExcludeNonDetailShaderData",
+          "Defaults": {
+            "Default": false
+          },
+          "Type": "bool",
+          "Description": "If true, only emit the shader_data tokens from the SIMD that have been selected for detail instruction tracing"
+        },
+        {
+          "Name": "SupressInstructionTokens",
+          "Defaults": {
+            "Default": false
+          },
+          "Type": "bool",
+          "Description": "Skip to dump instruction tokens if true. Otherwise, all token types that tokenMask specifies will be dumped."
+        },
+        {
+          "ValidValues": {
+            "IsEnum": true,
+            "Values": [
+              {
+                "Name": "TokenTypeMisc",
+                "Value": 1,
+                "Description": "A miscellaneous event has been sent. TT 2.3"
+              },
+              {
+                "Name": "TokenTypeTimeStamp",
+                "Value": 2,
+                "Description": "Timestamp tokens. TT 2.3"
+              },
+              {
+                "Name": "TokenTypeReg",
+                "Value": 4,
+                "Description": "Register activity token. TT 2.3"
+              },
+              {
+                "Name": "TokenTypeWaveStart",
+                "Value": 8,
+                "Description": "A wavefront has started. TT 2.3"
+              },
+              {
+                "Name": "TokenTypeWaveAlloc",
+                "Value": 16,
+                "Description": "Output space has been allocated for vertex position or color/Z. TT 2.3"
+              },
+              {
+                "Name": "TokenTypeRegCsPriv",
+                "Value": 32,
+                "Description": "There has been a compute pipeline private data, state or thread group update. TT 2.3"
+              },
+              {
+                "Name": "TokenTypeWaveEnd",
+                "Value": 64,
+                "Description": "Wavefront completion. TT 2.3"
+              },
+              {
+                "Name": "TokenTypeEvent",
+                "Value": 128,
+                "Description": "An event has reached the top of a shader stage. TT 2.3"
+              },
+              {
+                "Name": "TokenTypeEventCs",
+                "Value": 256,
+                "Description": "An event has reached the top of a compute shader stage. TT 2.3"
+              },
+              {
+                "Name": "TokenTypeEventGfx1",
+                "Value": 512,
+                "Description": "An event has reached the top of a shader stage for the second GFX pipe. TT 2.3"
+              },
+              {
+                "Name": "TokenTypeInst",
+                "Value": 1024,
+                "Description": "The shader has executed an instruction. TT 2.3"
+              },
+              {
+                "Name": "TokenTypeInstPc",
+                "Value": 2048,
+                "Description": "The shader has explicitly written the PC value. TT 2.3"
+              },
+              {
+                "Name": "TokenTypeInstUserData",
+                "Value": 4096,
+                "Description": "The shader has written user data into the thread trace buffer. TT 2.3"
+              },
+              {
+                "Name": "TokenTypeIssue",
+                "Value": 8192,
+                "Description": "Provides information about instruction scheduling. TT 2.3"
+              },
+              {
+                "Name": "TokenTypePerf",
+                "Value": 16384,
+                "Description": "The performance counter delta has been updated. TT 2.3 and below only"
+              },
+              {
+                "Name": "TokenTypeRegCs",
+                "Value": 32768,
+                "Description": "A compute state update packet has been received by the SPI. TT 2.3"
+              },
+              {
+                "Name": "TokenTypeVmemExec",
+                "Value": 65536,
+                "Description": "A previously issued VMEM instruction is now being sent to LDS/TA. TT 3.0"
+              },
+              {
+                "Name": "TokenTypeAluExec",
+                "Value": 131072,
+                "Description": "A previously issued VALU instruction is now being executed. TT 3.0"
+              },
+              {
+                "Name": "TokenTypeValuInst",
+                "Value": 262144,
+                "Description": "A VALU instruction has been issued. TT 3.0"
+              },
+              {
+                "Name": "TokenTypeWaveRdy",
+                "Value": 524288,
+                "Description": "Mask of which waves became ready this cycle but did not issue an instruction. TT 3.0"
+              },
+              {
+                "Name": "TokenTypeImmed1",
+                "Value": 1048576,
+                "Description": "One wave issued an immediate instruction this cycle. TT 3.0"
+              },
+              {
+                "Name": "TokenTypeImmediate",
+                "Value": 2097152,
+                "Description": "One or more waves have issued an immediate instruction this cycle. TT 3.0"
+              },
+              {
+                "Name": "TokenTypeUtilCounter",
+                "Value": 4194304,
+                "Description": "A new set of utilization counter values. TT 3.0"
+              }
+            ],
+            "Name": "TokenType",
+            "Description": "Bitmask values that correspond to token types."
+          },
+          "Name": "TokenMask",
+          "Flags": {
+            "IsBitmask": true,
+            "IsHex": true
+          },
+          "Defaults": {
+            "Default": "0xFFFFFFFF"
+          },
+          "Type": "uint32",
+          "Description": "Mask indicating which token types are requested to dump. It works with supressInstructionTokens to determine the dumped token types."
+        },
+        {
+          "Name": "SEMask",
+          "Flags": {
+            "IsHex": true
+          },
+          "Defaults": {
+            "Default": 0
+          },
+          "Type": "uint32",
+          "Description": "Mask indicating which SE to gather thread trace from. Zero means trace all SEs."
+        },
+        {
+          "Description": "Pipeline compiler hash to enable SQ thread traces for. If this is zero, thread traces will be enabled for all pipelines.  This filtering only applies to draw or cmdbuf profiling granularity.",
+          "Flags": {
+            "IsHex": true
+          },
+          "Defaults": {
+            "Default": 0
+          },
+          "Type": "uint64",
+          "Name": "PipelineHash"
+        },
+        {
+          "Description": "Treat PipelineHash as API PSO Hash instead of PAL Internal Hash.",
+          "Defaults": {
+            "Default": false
+          },
+          "Type": "bool",
+          "Name": "PipelineHashAsApiPsoHash"
+        },
+        {
+          "Name": "TsHashHi",
+          "Flags": {
+            "IsHex": true
+          },
+          "Defaults": {
+            "Default": 0
+          },
+          "Type": "uint64",
+          "Description": "High QWORD of the TS hash to enable SQ thread traces for."
+        },
+        {
+          "Name": "TsHashLo",
+          "Flags": {
+            "IsHex": true
+          },
+          "Defaults": {
+            "Default": 0
+          },
+          "Type": "uint64",
+          "Description": "Low QWORD of the TS hash to enable SQ thread traces for."
+        },
+        {
+          "Name": "VsHashHi",
+          "Flags": {
+            "IsHex": true
+          },
+          "Defaults": {
+            "Default": 0
+          },
+          "Type": "uint64",
+          "Description": "High QWORD of the VS hash to enable SQ thread traces for."
+        },
+        {
+          "Name": "VsHashLo",
+          "Flags": {
+            "IsHex": true
+          },
+          "Defaults": {
+            "Default": 0
+          },
+          "Type": "uint64",
+          "Description": "Low QWORD of the VS hash to enable SQ thread traces for."
+        },
+        {
+          "Name": "HsHashHi",
+          "Flags": {
+            "IsHex": true
+          },
+          "Defaults": {
+            "Default": 0
+          },
+          "Type": "uint64",
+          "Description": "High QWORD of the HS hash to enable SQ thread traces for."
+        },
+        {
+          "Name": "HsHashLo",
+          "Flags": {
+            "IsHex": true
+          },
+          "Defaults": {
+            "Default": 0
+          },
+          "Type": "uint64",
+          "Description": "Low QWORD of the HS hash to enable SQ thread traces for."
+        },
+        {
+          "Name": "DsHashHi",
+          "Flags": {
+            "IsHex": true
+          },
+          "Defaults": {
+            "Default": 0
+          },
+          "Type": "uint64",
+          "Description": "High QWORD of the DS hash to enable SQ thread traces for."
+        },
+        {
+          "Name": "DsHashLo",
+          "Flags": {
+            "IsHex": true
+          },
+          "Defaults": {
+            "Default": 0
+          },
+          "Type": "uint64",
+          "Description": "Low QWORD of the DS hash to enable SQ thread traces for."
+        },
+        {
+          "Name": "GsHashHi",
+          "Flags": {
+            "IsHex": true
+          },
+          "Defaults": {
+            "Default": 0
+          },
+          "Type": "uint64",
+          "Description": "High QWORD of the GS hash to enable SQ thread traces for."
+        },
+        {
+          "Name": "GsHashLo",
+          "Flags": {
+            "IsHex": true
+          },
+          "Defaults": {
+            "Default": 0
+          },
+          "Type": "uint64",
+          "Description": "Low QWORD of the GS hash to enable SQ thread traces for."
+        },
+        {
+          "Name": "MsHashHi",
+          "Flags": {
+            "IsHex": true
+          },
+          "Defaults": {
+            "Default": 0
+          },
+          "Type": "uint64",
+          "Description": "High QWORD of the MS hash to enable SQ thread traces for."
+        },
+        {
+          "Name": "MsHashLo",
+          "Flags": {
+            "IsHex": true
+          },
+          "Defaults": {
+            "Default": 0
+          },
+          "Type": "uint64",
+          "Description": "Low QWORD of the MS hash to enable SQ thread traces for."
+        },
+        {
+          "Name": "PsHashHi",
+          "Flags": {
+            "IsHex": true
+          },
+          "Defaults": {
+            "Default": 0
+          },
+          "Type": "uint64",
+          "Description": "High QWORD of the PS hash to enable SQ thread traces for."
+        },
+        {
+          "Name": "PsHashLo",
+          "Flags": {
+            "IsHex": true
+          },
+          "Defaults": {
+            "Default": 0
+          },
+          "Type": "uint64",
+          "Description": "Low QWORD of the PS hash to enable SQ thread traces for."
+        },
+        {
+          "Name": "CsHashHi",
+          "Flags": {
+            "IsHex": true
+          },
+          "Defaults": {
+            "Default": 0
+          },
+          "Type": "uint64",
+          "Description": "High QWORD of the CS hash to enable SQ thread traces for."
+        },
+        {
+          "Name": "CsHashLo",
+          "Flags": {
+            "IsHex": true
+          },
+          "Defaults": {
+            "Default": 0
+          },
+          "Type": "uint64",
+          "Description": "Low QWORD of the CS hash to enable SQ thread traces for."
+        },
+        {
+          "Name": "MaxDraws",
+          "Flags": {
+            "IsHex": true
+          },
+          "Defaults": {
+            "Default": 0
+          },
+          "Type": "uint32",
+          "Description": "Max number of draws to thread-trace.  A value of 0 indicates no limit."
+        },
+        {
+          "Name": "AddTtvHashes",
+          "Defaults": {
+            "Default": false
+          },
+          "Type": "bool",
+          "Description": "Whether to inject the pipeline hash and client shader hases into the thread trace for Thread Trace Viewer analysis."
+        },
+        {
+          "Description": "Maximum amount of data in bytes to capture per trace. For detailed SE case, driver will multiply this setting value by 4 to get the real size limit. A trace will cover a span of commands based on the GpuProfilerGranularity setting.  Defaults to 1MB.  Current HW requires the size be aligned to 0x1000 bytes.  The maximum recommended size is 128MB (0x7FFF000).",
+          "Defaults": {
+            "Default": 1048576
+          },
+          "Type": "uint64",
+          "Name": "BufferSize"
+        },
+        {
+          "ValidValues": {
+            "Name": "GpuProfilerStallMode",
+            "Values": [
+              {
+                "Description": "Always stall, never discard data",
+                "Value": 0,
+                "Name": "GpuProfilerStallAlways"
+              },
+              {
+                "Description": "Lose detailed profiling data when necessary to attempt to avoid stalls",
+                "Value": 1,
+                "Name": "GpuProfilerStallLoseDetail"
+              },
+              {
+                "Description": "Never stall, discard data if the buffer is full",
+                "Value": 2,
+                "Name": "GpuProfilerStallNever"
+              }
+            ],
+            "SkipGen": true,
+            "IsEnum": true
+          },
+          "Name": "StallBehavior",
+          "Defaults": {
+            "Default": "GpuProfilerStallAlways"
+          },
+          "Type": "enum",
+          "Description": "Behavior to take when trace buffer is full."
+        },
+        {
+          "Name": "AllowIssueMarkerEvent",
+          "Defaults": {
+            "Default": true
+          },
+          "Type": "bool",
+          "Description": "Determine if issuing marker event is allowed when SQTT is enabled."
+        }
+      ],
+      "Description": "Configuration options for capturing a SQ Thread Trace through the PAL GPU Profiler layer."
+    },
+    {
+      "Name": "GpuProfilerSpmConfig",
+      "Tags": [
+        "GPU Profiler"
+      ],
+      "Scope": "PrivatePalKey",
+      "Structure": [
+        {
+          "Description": "File path specifying where the global performance counter config file can be found.  This file should have one line per counter to capture in the form \"Block ID Instance Name\". Block can be one of the following: CB, CPC, CPF, CPG, DB, DMA, GDS, GRBM, GRBM_SE, IA, MC, PA, RLC, SC, SPI, SQ, SRBM, SX, TA, TCA, TCC, TCP, TCS, TD, VGT, WD.  ID should correspond counter of interest for the specified Block, these can be selected by reading the performance to the specific counter select register for that block. Instance can be the block instance ordinal of interest. It can also be the enum EACH which means every instance of the block is of interest. Also It can be ALL, which has the same meaning as EACH, but the results of every instance will be accumlated. Name will be the header of the column in the .csv file (limited to 127 characters).  A \"#\" can be inserted as the first character in a line to force that line to be ignored.  Gathering performance counters has a huge performance impact; consider disabling TDRs on Windows. WARNING: Page fault will occur when attempting spm traces on GFX9 HW, unless RLC_SPM_VMID is set in the RLC_SPM_MC_CNTL register. KMD has to set this register. This register can be set manually (debug VMID: 0xb, RequestDebugVmid=true) for testing. Also, the sample delay register values need to be set for correct streaming counter data.",
+          "Flags": {
+            "IsFile": true
+          },
+          "Defaults": {
+            "Default": ""
+          },
+          "Type": "string",
+          "Name": "SpmPerfCounterConfigFile"
+        },
+        {
+          "ValidValues": {
+            "Values": [
+              {
+                "LogicOp": "GreaterThanOrEqual",
+                "Description": "Minimum 32",
+                "Value": 32
+              }
+            ]
+          },
+          "Name": "SpmTraceInterval",
+          "Defaults": {
+            "Default": 4096
+          },
+          "Type": "uint32",
+          "Description": "Sample interval in sclck."
+        },
+        {
+          "Description": "Maximum amount of data in bytes to capture per trace.  A trace will cover a span of commands based on the GpuProfilerGranularity setting.  Defaults to 1MB.  Current HW requires the size be aligned to 0x1000 bytes.",
+          "Defaults": {
+            "Default": 1048576
+          },
+          "Type": "uint64",
+          "Name": "SpmBufferSize"
+        }
+      ],
+      "Description": "Configuration options for capturing Streaming Performance Monitors through the PAL GPU Profiler layer."
+    },
+    {
+      "Name": "GpuProfilerDfSpmConfig",
+      "Tags": [
+        "GPU Profiler"
+      ],
+      "Scope": "PrivatePalKey",
+      "Structure": [
+        {
+          "ValidValues": {
+            "Values": [
+              {
+                "LogicOp": "GreaterThanOrEqual",
+                "Description": "Minimum 1",
+                "Value": 1
+              }
+            ]
+          },
+          "Name": "DfSpmTraceInterval",
+          "Defaults": {
+            "Default": 1280
+          },
+          "Type": "uint32",
+          "Description": "DF Sample interval in nano seconds. KMD will choose the closest possible interval value."
+        },
+        {
+          "Description": "Maximum amount of data in MB to capture per trace.  A trace will cover a span of commands based on the GpuProfilerGranularity setting.  Defaults to 1MB.  Current HW requires the size be aligned to 0x10000 bytes.",
+          "Defaults": {
+            "Default": 1
+          },
+          "Type": "uint64",
+          "Name": "DfSpmBufferSize"
+        }
+      ],
+      "Description": "Configuration options for capturing Data Fabric Streaming Performance Monitors through the PAL GPU Profiler layer."
+    },
+    {
+      "Name": "CmdBufferLoggerEnabled",
+      "Tags": [
+        "CmdBuffer Logger"
+      ],
+      "Defaults": {
+        "Default": false
+      },
+      "Scope": "PrivatePalKey",
+      "Type": "bool",
+      "Description": "Enables the command buffer logger layer, which provides ICmdBuffer level annotations directly in command buffer dumps. These annoations can later be deciphered using offline tools."
+    },
+    {
+      "Name": "CmdBufferLoggerConfig",
+      "Tags": [
+        "CmdBuffer Logger"
+      ],
+      "Scope": "PrivatePalKey",
+      "Structure": [
+        {
+          "ValidValues": {
+            "Values": [
+              {
+                "Description": "CmdBarrier",
+                "Value": 1
+              },
+              {
+                "Description": "CmdDraws",
+                "Value": 2
+              },
+              {
+                "Description": "CmdDispatchs",
+                "Value": 4
+              },
+              {
+                "Description": "CmdWriteTimestamp",
+                "Value": 8
+              },
+              {
+                "Description": "CmdBinds",
+                "Value": 16
+              },
+              {
+                "Description": "CmdSetUserData",
+                "Value": 32
+              },
+              {
+                "Description": "CmdSets",
+                "Value": 64
+              },
+              {
+                "Description": "CmdBlts",
+                "Value": 128
+              },
+              {
+                "Description": "Miscellaneous",
+                "Value": 256
+              }
+            ],
+            "SkipGen": true,
+            "IsEnum": true,
+            "Name": "CmdBufferLoggerAnnotations"
+          },
+          "Name": "CmdBufferLoggerAnnotations",
+          "Tags": [
+            "CmdBuffer Logger"
+          ],
+          "Flags": {
+            "IsHex": true,
+            "IsBitmask": true
+          },
+          "Defaults": {
+            "Default": 511
+          },
+          "Scope": "PrivatePalKey",
+          "Type": "uint32",
+          "Description": "Bitmask controlling which ICmdBuffer calls to annotate."
+        },
+        {
+          "ValidValues": {
+            "IsEnum": true,
+            "IsExclusive": true,
+            "Values": [
+              {
+                "Name": "CblEmbedDrawDispatchNone",
+                "Value": 0,
+                "Description": "Do not embed draw and dispatch shader IDs."
+              },
+              {
+                "Name": "CblEmbedDrawDispatchAll",
+                "Value": 1,
+                "Description": "Embed all draw and dispatch shader IDs."
+              },
+              {
+                "Name": "ClbEmbedDrawDispatchApp",
+                "Value": 2,
+                "Description": "Only embed application draws and dispatches."
+              }
+            ],
+            "Name": "CblEmbedDrawDispatchMode",
+            "Description": "Which draw and dispatch shader IDs to embed in the command stream."
+          },
+          "Name": "EmbedDrawDispatchInfo",
+          "Tags": [
+            "CmdBuffer Logger"
+          ],
+          "Defaults": {
+            "Default": "CblEmbedDrawDispatchNone"
+          },
+          "Scope": "PrivatePalKey",
+          "Type": "enum",
+          "Description": "Enables the embedding of draw/dispatch shader IDs within the cmd-stream.  Annotations and single-step options will be disabled."
+        }
+      ],
+      "Description": "Configuration options for the CmdBuffer Logger layer."
+    },
+    {
+      "Name": "Pm4InstrumentorEnabled",
+      "Tags": [
+        "PM4 Instrumentor"
+      ],
+      "Defaults": {
+        "Default": false
+      },
+      "Scope": "PrivatePalKey",
+      "Type": "bool",
+      "Description": "Enables the PAL PM4 instrumentor layer."
+    },
+    {
+      "Name": "Pm4InstrumentorConfig",
+      "Tags": [
+        "PM4 Instrumentor"
+      ],
+      "Scope": "PrivatePalKey",
+      "Structure": [
+        {
+          "Description": "Relative directory where statistics logs are placed. Relative to the path in the AMD_DEBUG_DIR environment variable. If that env var isn't set, the location is platform dependent.",
+          "Flags": {
+            "IsDir": true
+          },
+          "Defaults": {
+            "Default": "amdpal/",
+            "Windows": "PalLog\\",
+            "Linux": "amdpal/"
+          },
+          "Type": "string",
+          "Name": "LogDirectory"
+        },
+        {
+          "Description": "Suffix added to the filename (including the file extension) of the statistics logs. Each logged Queue will have a unique filename prefix which will precede this string.",
+          "Defaults": {
+            "Default": "pm4-stats.log"
+          },
+          "Type": "string",
+          "Name": "FilenameSuffix"
+        },
+        {
+          "Description": "Controls when statistics are written out to the log file(s).",
+          "Type": "enum",
+          "ValidValues": {
+            "Name": "Pm4InstrumentorDumpMode",
+            "IsEnum": true,
+            "Values": [
+              {
+                "Description": "Dump at Queue Destruction",
+                "Value": 0,
+                "Name": "Pm4InstrumentorDumpQueueDestroy"
+              },
+              {
+                "Description": "Dump at Queue Submission",
+                "Value": 1,
+                "Name": "Pm4InstrumentorDumpQueueSubmit"
+              }
+            ]
+          },
+          "Name": "DumpMode",
+          "Defaults": {
+            "Default": "Pm4InstrumentorDumpQueueDestroy"
+          }
+        },
+        {
+          "Description": "Controls how often statistics are written out to the log file(s).  A value of zero means re-dump every submit.  Units are in seconds.",
+          "Type": "uint32",
+          "Name": "DumpInterval",
+          "Defaults": {
+            "Default": 5
+          }
+        }
+      ],
+      "Description": "PM4 Instrumentor configuration"
+    },
+    {
+      "Name": "InterfaceLoggerEnabled",
+      "Tags": [
+        "Interface Logger"
+      ],
+      "Defaults": {
+        "Default": false
+      },
+      "Scope": "PrivatePalKey",
+      "Type": "bool",
+      "Description": "Enables the PAL interface logging layer."
+    },
+    {
+      "Name": "InterfaceLoggerConfig",
+      "Tags": [
+        "Interface Logger"
+      ],
+      "Scope": "PrivatePalKey",
+      "Structure": [
+        {
+          "Description": "Relative directory where the interface logger writes its logs. Relative to the path in the AMD_DEBUG_DIR environment variable. If that env var isn't set, the location is platform dependent.",
+          "Flags": {
+            "IsDir": true
+          },
+          "Defaults": {
+            "Default": "amdpal/",
+            "Windows": "PalLog\\",
+            "Linux": "amdpal/"
+          },
+          "Type": "string",
+          "Name": "LogDirectory"
+        },
+        {
+          "Description": "Each thread will write into its own log file, avoiding taking a global lock.",
+          "Defaults": {
+            "Default": false
+          },
+          "Type": "bool",
+          "Name": "Multithreaded"
+        },
+        {
+          "Description": "Enter the elevated preset when this frame begins even if Shift-F11 is not held.",
+          "Defaults": {
+            "Default": 0
+          },
+          "Type": "uint32",
+          "Name": "StartFrame"
+        },
+        {
+          "Description": "How many frames to use the elevated preset even if Shift-F11 is not held. 0 disables this feature.",
+          "Defaults": {
+            "Default": 0
+          },
+          "Type": "uint32",
+          "Name": "FrameCount"
+        },
+        {
+          "ValidValues": {
+            "Values": [
+              {
+                "Description": "LogFlagGeneralCalls: Functions which are hard to classify or rarely called.",
+                "Value": 1
+              },
+              {
+                "Description": "LogFlagCreateDestroy: Functions which create and destroy PAL objects.",
+                "Value": 2
+              },
+              {
+                "Description": "LogFlagBindGpuMemory: Functions relevant to GPU memory binding.",
+                "Value": 4
+              },
+              {
+                "Description": "LogFlagQueueOps: Functions relevant to IQueue operations.",
+                "Value": 8
+              },
+              {
+                "Description": "LogFlagCmdBuilding: Functions which build ICmdBuffer commands.",
+                "Value": 16
+              },
+              {
+                "Description": "LogFlagCreateSrds: Functions which create SRDs.",
+                "Value": 32
+              },
+              {
+                "Description": "LogFlagCallbacks: Developer callbacks which occur during logged interface calls.",
+                "Value": 64
+              },
+              {
+                "Description": "LogFlagBarrierLog: Functions which are necessary to generate barrier log file via script. DON'T OR with other log flags.",
+                "Value": 128
+              }
+            ],
+            "SkipGen": true,
+            "IsEnum": true,
+            "Name": "BasePreset"
+          },
+          "Name": "BasePreset",
+          "Flags": {
+            "IsHex": true,
+            "IsBitmask": true
+          },
+          "Defaults": {
+            "Default": 7
+          },
+          "Type": "uint32",
+          "Description": "Bitmask of which interface function calls will be logged by default."
+        },
+        {
+          "ValidValues": {
+            "Values": [
+              {
+                "Description": "LogFlagGeneralCalls: Functions which are hard to classify or rarely called.",
+                "Value": 1
+              },
+              {
+                "Description": "LogFlagCreateDestroy: Functions which create and destroy PAL objects.",
+                "Value": 2
+              },
+              {
+                "Description": "LogFlagBindGpuMemory: Functions relevant to GPU memory binding.",
+                "Value": 4
+              },
+              {
+                "Description": "LogFlagQueueOps: Functions relevant to IQueue operations.",
+                "Value": 8
+              },
+              {
+                "Description": "LogFlagCmdBuilding: Functions which build ICmdBuffer commands.",
+                "Value": 16
+              },
+              {
+                "Description": "LogFlagCreateSrds: Functions which create SRDs.",
+                "Value": 32
+              },
+              {
+                "Description": "LogFlagCallbacks: Developer callbacks which occur during logged interface calls.",
+                "Value": 64
+              },
+              {
+                "Description": "LogFlagBarrierLog: Functions which are necessary to generate barrier log file script. DON'T OR with other log flags.",
+                "Value": 128
+              }
+            ],
+            "SkipGen": true,
+            "IsEnum": true,
+            "Name": "ElevatedPreset"
+          },
+          "Name": "ElevatedPreset",
+          "Flags": {
+            "IsHex": true,
+            "IsBitmask": true
+          },
+          "Defaults": {
+            "Default": 95
+          },
+          "Type": "uint32",
+          "Description": "Bitmask of which interface function calls will be logged when the user holds Shift-F11 or specifies StartFrame/FrameCount for desired frame range."
+        }
+      ],
+      "Description": "Configuration options for the PAL Interface Logger layer."
+    },
+    {
+      "Name": "GpuDebugEnabled",
+      "Tags": [
+        "GPU Debugging"
+      ],
+      "Defaults": {
+        "Default": false
+      },
+      "Scope": "PrivatePalKey",
+      "Type": "bool",
+      "Description": "Enables the GPU debugging layer, which provides single-step or submit-on-draw-count functionality for ICmdBuffer actions when debugging a GPU hang."
+    },
+    {
+      "Name": "GpuDebugConfig",
+      "Tags": [
+        "GPU Debugging"
+      ],
+      "Scope": "PrivatePalKey",
+      "Structure": [
+        {
+          "Name": "SubmitOnActionCount",
+          "Tags": [
+            "GPU Debugging"
+          ],
+          "Defaults": {
+            "Default": 0
+          },
+          "Scope": "PrivatePalKey",
+          "Type": "uint32",
+          "Description": "Forces submission of command buffers after X amount of CmdBuffer actions (Draws, Dispatches, BLTs). 0 indicates that this setting is off. There are two restrictions on this setting: 1) We cannot break up a MultiQueue submit, and 2) BLTs that consist of multiple draws or dispatches cannot be broken up."
+        },
+        {
+          "Name": "TokenAllocatorSize",
+          "Tags": [
+            "GPU Debugging"
+          ],
+          "Defaults": {
+            "Default": 65536
+          },
+          "Scope": "PrivatePalKey",
+          "Type": "uint64",
+          "Description": "Initial batched cmd buffer token stream size. Reduce this to avoid running out of memory or increase it to avoid reallocations and memcpys."
+        },
+        {
+          "Name": "WaitIdleSleepMs",
+          "Tags": [
+            "GPU Debugging"
+          ],
+          "Defaults": {
+            "Default": 2000
+          },
+          "Scope": "PrivatePalKey",
+          "Type": "uint32",
+          "Description": "Time, in milliseconds, to wait-idle after submissions that require waiting."
+        },
+        {
+          "ValidValues": {
+            "IsEnum": true,
+            "Values": [
+              {
+                "Name": "TimestampAndWaitDraws",
+                "Value": 1
+              },
+              {
+                "Name": "TimestampAndWaitDispatches",
+                "Value": 2
+              },
+              {
+                "Name": "TimestampAndWaitBarriers",
+                "Value": 4
+              },
+              {
+                "Name": "TimestampAndWaitBlts",
+                "Value": 8
+              }
+            ],
+            "Name": "TimestampAndWait"
+          },
+          "Name": "SingleStep",
+          "Tags": [
+            "GPU Debugging"
+          ],
+          "Flags": {
+            "IsHex": true,
+            "IsBitmask": true
+          },
+          "Defaults": {
+            "Default": 0
+          },
+          "Scope": "PrivatePalKey",
+          "Type": "uint32",
+          "Description": "Bitmask controlling single step behavior for ICmdBuffer calls for Draw/Dispatch/Barrier."
+        },
+        {
+          "ValidValues": {
+            "IsEnum": true,
+            "Values": [
+              {
+                "Name": "BeforeDraw",
+                "Value": 1
+              },
+              {
+                "Name": "AfterDraw",
+                "Value": 2
+              },
+              {
+                "Name": "BeforeDispatch",
+                "Value": 4
+              },
+              {
+                "Name": "AfterDispatch",
+                "Value": 8
+              },
+              {
+                "Name": "BeforeBarrier",
+                "Value": 16
+              },
+              {
+                "Name": "AfterBarrier",
+                "Value": 32
+              },
+              {
+                "Name": "BeforeBlt",
+                "Value": 64
+              },
+              {
+                "Name": "AfterBlt",
+                "Value": 128
+              }
+            ],
+            "Name": "BeforeAfterAction"
+          },
+          "Name": "CacheFlushInvOnAction",
+          "Tags": [
+            "Gpu Debugging"
+          ],
+          "Flags": {
+            "IsHex": true,
+            "IsBitmask": true
+          },
+          "Defaults": {
+            "Default": 0
+          },
+          "Scope": "PrivatePalKey",
+          "Type": "uint32",
+          "Description": "Bitmask controlling when to perform a full cache flush and invalidation before and/or after each action (Draw/Dispatch/Barrier/Blt)."
+        },
+        {
+          "ValidValues": {
+            "IsEnum": true,
+            "Values": [
+              {
+                "Name": "VerificationDisabled",
+                "Value": 0
+              },
+              {
+                "Name": "VerificationBoundTargets",
+                "Value": 1
+              }
+            ],
+            "Name": "DebugVerification"
+          },
+          "Name": "VerificationOptions",
+          "Tags": [
+            "GPU Debugging"
+          ],
+          "Flags": {
+            "IsHex": true,
+            "IsBitmask": true
+          },
+          "Defaults": {
+            "Default": 1
+          },
+          "Scope": "PrivatePalKey",
+          "Type": "uint32",
+          "Description": "Bitmask controlling verification options which will assert for bad cases."
+        },
+        {
+          "Name": "SurfaceCaptureHash",
+          "Flags": {
+            "IsHex": true
+          },
+          "Tags": [
+            "GPU Debugging"
+          ],
+          "Defaults": {
+            "Default": 0
+          },
+          "Scope": "PrivatePalKey",
+          "Type": "uint64",
+          "Description": "Indicates the hash of the pipeline or shader to capture. If this is zero, then all pipelines will be captured. This value is checked against both the shader and pipeline hash upper and lower portions."
+        },
+        {
+          "Name": "SurfaceCaptureStart",
+          "Tags": [
+            "GPU Debugging"
+          ],
+          "Defaults": {
+            "Default": 0
+          },
+          "Scope": "PrivatePalKey",
+          "Type": "uint32",
+          "Description": "First draw/blit image call in the selected command buffer from which to capture output surfaces"
+        },
+        {
+          "Name": "SurfaceCaptureCount",
+          "Tags": [
+            "GPU Debugging"
+          ],
+          "Defaults": {
+            "Default": 0
+          },
+          "Scope": "PrivatePalKey",
+          "Type": "uint32",
+          "Description": "Number of draw/blit image calls in the selected command buffer from which to capture output surfaces"
+        },
+        {
+          "Name": "SurfaceCaptureFrameStart",
+          "Tags": [
+            "GPU Debugging"
+          ],
+          "Defaults": {
+            "Default": 0
+          },
+          "Scope": "PrivatePalKey",
+          "Type": "uint32",
+          "Description": "First frame to start surface capture. NOTE: This option only filter the image dump, GPU still has do all the extra work associated with surface capture on every frame."
+        },
+        {
+          "Name": "SurfaceCaptureFrameCount",
+          "Tags": [
+            "GPU Debugging"
+          ],
+          "Defaults": {
+            "Default": "0x7fffffff"
+          },
+          "Scope": "PrivatePalKey",
+          "Type": "uint32",
+          "Description": "Number of surface capture frames to output. NOTE: This option only filter the image dump, GPU still has do all the extra work associated with surface capture on every frame."
+        },
+        {
+          "Name": "SurfaceCaptureFilenameHashType",
+          "Tags": [
+            "GPU Debugging"
+          ],
+          "ValidValues": {
+            "IsEnum": true,
+            "Values": [
+              {
+                "Name": "FilenameHashNoHash",
+                "Value": 0,
+                "Description": "Do not add hash in filename."
+              },
+              {
+                "Name": "FilenameHashPipeline",
+                "Value": 1,
+                "Description": "Include pipeline hash in filename"
+              },
+              {
+                "Name": "FilenameHashTask",
+                "Value": 2,
+                "Description": "Include task shader hash in filename."
+              },
+              {
+                "Name": "FilenameHashVs",
+                "Value": 3,
+                "Description": "Include vertex shader hash in filename."
+              },
+              {
+                "Name": "FilenameHashHs",
+                "Value": 4,
+                "Description": "Include hull shader hash in filename."
+              },
+              {
+                "Name": "FilenameHashDs",
+                "Value": 5,
+                "Description": "Include domain shader hash in filename."
+              },
+              {
+                "Name": "FilenameHashGs",
+                "Value": 6,
+                "Description": "Include geometry shader hash in filename."
+              },
+              {
+                "Name": "FilenameHashMesh",
+                "Value": 7,
+                "Description": "Include mesh shader hash in filename."
+              },
+              {
+                "Name": "FilenameHashPs",
+                "Value": 8,
+                "Description": "Include pixel shader hash in filename."
+              }
+            ],
+            "Name": "FilenameHashType"
+          },
+          "Defaults": {
+            "Default": 0
+          },
+          "Scope": "PrivatePalKey",
+          "Type": "uint32",
+          "Description": "Include which hash in surface capture filename."
+        },
+        {
+          "ValidValues": {
+            "IsEnum": true,
+            "Values": [
+              {
+                "Name": "NoBlitCapture",
+                "Value": 0,
+                "Description": "No blit capture is enabled."
+              },
+              {
+                "Name": "EnableCmdCopyMemoryToImage",
+                "Value": 1,
+                "Description": "Enable capture image in CmdCopyMemoryToImage."
+              },
+              {
+                "Name": "EnableCmdClearColorImage",
+                "Value": 2,
+                "Description": "Enable capture the image after clear."
+              },
+              {
+                "Name": "EnableCmdClearDepthStencil",
+                "Value": 4,
+                "Description": "Enable capture the image after clear."
+              },
+              {
+                "Name": "EnableCmdCopyImageToMemory",
+                "Value": 8,
+                "Description": "Enable capture image in CmdCopyImageToMemory."
+              }
+            ],
+            "Name": "EnabledBlitOperations"
+          },
+          "Defaults": {
+            "Default": 0
+          },
+          "Flags": {
+            "IsBitmask": true,
+            "IsHex": true
+          },
+          "Scope": "PrivatePalKey",
+          "Type": "uint32",
+          "Description": "Enable blit image capture along with the draw surface capture.",
+          "Name": "BlitSurfaceCaptureBitmask"
+        },
+        {
+          "Name": "SurfaceCaptureLogDirectory",
+          "Tags": [
+            "GPU Debugging"
+          ],
+          "Flags": {
+            "IsDir": true
+          },
+          "Defaults": {
+            "Default": "amdpal/",
+            "Windows": "PalLog\\",
+            "Linux": "amdpal/"
+          },
+          "Scope": "PrivatePalKey",
+          "Type": "string",
+          "Description": "Relative directory where the captured surfaces will be written. Relative to the path in the AMD_DEBUG_DIR environment variable. If that env var isn't set, the location is platform dependent."
+        }
+      ],
+      "Description": "Controls what debugging options are selected in the GPU Debug layer."
+    }
+  ],
+  "Tags": [
+    "Debug Print",
+    "Debug Overlay",
+    "GPU Debugging",
+    "GPU Profiler",
+    "CmdBuffer Logger",
+    "Interface Logger",
+    "Shader Debug"
+  ]
+}

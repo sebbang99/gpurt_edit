@@ -1,0 +1,54 @@
+{
+  "entries": [
+    {
+      "pattern": {
+        "shaderOnly": true,
+        "cs": {
+          "codeHash": "0x04d2d5e97a62c63a f0e7a98f8a3378c0"
+        }
+      },
+      "action": {
+        "cs": {
+          "forceLoopUnrollCount": 1
+        }
+      }
+    },
+    {
+      "pattern": {
+        "shaderOnly": true,
+        "cs": {
+          "codeHash": "0x0c60459c2f1883c6 ee40ab0dcef5f327"
+        }
+      },
+      "action": {
+        "cs": {
+          "useSiScheduler": true
+        }
+      }
+    },
+    {
+      "pattern": {
+        "ps": {
+          "codeHash": "0xc412fe0973f91c52 a5a03aeebecd3083"
+        }
+      },
+      "action": {
+        "ps": {
+          "favorLatencyHiding": true
+        }
+      }
+    },
+    {
+      "pattern": {
+        "ps": {
+          "codeHash": "0x2841218c6a53482e b50de2c597b18f35"
+        }
+      },
+      "action": {
+        "ps": {
+          "favorLatencyHiding": true
+        }
+      }
+    }
+  ]
+}
